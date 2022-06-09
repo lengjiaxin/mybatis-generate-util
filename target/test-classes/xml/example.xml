@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <!-- 引入配置文件 可以引用 -->
+    <properties resource="mybatis.properties"/>
+    <classPathEntry location="${jar.location}"/>
+
+    <context id="MSTables" targetRuntime="MyBatis3"
+             defaultModelType="flat">
+        <property name="javaFileEncoding" value="utf-8"/>
+
+        <!-- 自动识别数据库关键字，默认false -->
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!-- 生成注释插件 -->
+        <plugin type="org.mybatis.generator.plugin.CommentPlugin"/>
+        <!-- 分页插件 -->
+        <plugin type="org.mybatis.generator.plugin.PaginationMysqlPlugin"/>
+        <plugin type="org.mybatis.generator.plugin.InsertBatchPlugin"/>
+        <plugin type="org.mybatis.generator.plugin.InsertBatchSelectivePlugin"/>
+        <plugin type="org.mybatis.generator.plugin.UpdateBatchSelectivePlugin"/>
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}" password="${jdbc.passwd}">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+            <property name="useSSL" value="false"/>
+        </jdbcConnection>
+
+        <!-- 生成模型的包名和位置 -->
+        <javaModelGenerator targetPackage="${package.name}.dao.template.bean.system"
+                            targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成的映射文件包名和位置 -->
+        <sqlMapGenerator targetPackage="mappers.template.system"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成DAO的包名和位置 -->
+        <javaClientGenerator targetPackage="${package.name}.dao.template.mapper.system"
+                             targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="training_system_address" domainObjectName="SystemAddress"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>
